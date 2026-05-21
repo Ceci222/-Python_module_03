@@ -1,27 +1,50 @@
 import sys
 
-print("=== Player Score Analytics ===")
 
-arguments = sys.argv[1:]
-players = len(arguments)
-total = sum(arguments)
-average_score = sum(arguments) / len(arguments)
-top_score = max(arguments)
-lowest_score = min(arguments)
-score_range =  max(arguments) - min(arguments)
+USAGE = ("No scores provided. "
+         "Usage: python3 ft_score_analytics.py <score1> <score2> ...")
 
-try:
-    for arg in arguments:
-        int(arg)
-    
-    print(f"Scores processed: [{arguments}]")
-    print(f"Total players: {players}")
-    print(f"Total score: {total}")
-    print(f"Average score: {average_score}")
-    print(f"High score: {top_score}")
-    print(f"Low score: {lowest_score}")
-    print(f"Score range: {score_range}")
 
-except:
-    for arg in arguments:
-    print("Invalid parameter:")
+def add_scores_to_list() -> list[int]:
+    scores = []
+    for arg in sys.argv[1:]:
+        try:
+            scores.append(int(arg))
+        except ValueError:
+            print(f"Invalid parameter: '{arg}'")
+    return scores
+
+
+def check_args() -> int:
+    if (len(sys.argv) == 1):
+        print(USAGE)
+        print()
+        return 1
+    return 0
+
+
+def main() -> None:
+    print("=== Player Score Analytics ===")
+
+    if (check_args() == 1):
+        return
+
+    scores = add_scores_to_list()
+
+    if (len(scores) == 0):
+        print(USAGE)
+        print()
+        return
+
+    print(f"Scores processed: {scores}")
+    print("Total players:", len(scores))
+    print("Total score:", sum(scores))
+    print("Average score:", sum(scores) / len(scores))
+    print("High score:", max(scores))
+    print("Low score:", min(scores))
+    print("Score range:", max(scores) - min(scores))
+    print()
+
+
+if __name__ == "__main__":
+    main()
