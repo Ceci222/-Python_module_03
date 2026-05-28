@@ -21,18 +21,26 @@ players = [
 ]
 
 
-def gen_event(players: list[str], all_actions: list[str]) -> Generator[tuple[str,str], None, None]:
+def gen_event(
+        players: list[str],
+        all_actions: list[str]
+) -> Generator[tuple[str, str], None, None]:
+
     while True:
         player = random.choice(players)
         action = random.choice(all_actions)
         yield (player, action)
 
 
-def consume_event(event_list: list[tuple[str, str]]) -> Generator[tuple[str,str], None, None]:
+def consume_event(
+        event_list: list[tuple[str, str]]
+) -> Generator[tuple[str, str], None, None]:
+
     while (len(event_list) != 0):
         single_event = random.choice(event_list)
         event_list.remove(single_event)
         yield single_event
+
 
 def main() -> None:
     print("=== Game Data Stream Processor ===")
